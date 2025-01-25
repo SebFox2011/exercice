@@ -5,7 +5,13 @@ type Props = {
   onRemove: () => void;
 };
 
-function BookmarkItem({ bookmark, onRemove }: Props) {
+/**
+  * Composant affichant un favori
+  * @param bookmark Favori à afficher
+  * @param onRemove Fonction appelée lors de la suppression du favori
+  * @returns JSX.Element
+  */
+const BookmarkItem = ({ bookmark, onRemove }: Props) => {
   return (
     <div
       style={{
@@ -15,27 +21,38 @@ function BookmarkItem({ bookmark, onRemove }: Props) {
         padding: "1rem",
         margin: "1rem",
         backgroundColor: "lightgray",
+        borderRadius: "15px",
       }}
     >
       {bookmark.thumbnailUrl && (
-        <img src={bookmark.thumbnailUrl} alt={bookmark.title} />
+        <img
+          src={bookmark.thumbnailUrl}
+          alt={bookmark.title}
+          style={{ maxWidth: "200px" }}
+        />
       )}
+      <p>
+        <a href={bookmark.url} target="_blank" rel="noreferrer">
+          {bookmark.url}
+        </a>
+      </p>
       <p>Titre: {bookmark.title}</p>
       <p>Auteur: {bookmark.author}</p>
       <p>Date d'ajout: {bookmark.addedDate}</p>
-      <p>Date de publication: {bookmark.publishedDate}</p>
+      {bookmark.publishedDate && (
+        <p>Date de publication: {bookmark.publishedDate}</p>
+      )}
       {bookmark.duration && <p>Durée: {bookmark.duration}</p>}
       {bookmark.dimensions && <p>Dimensions: {bookmark.dimensions}</p>}
-      <p>
-        <a href={bookmark.url} target="_blank" rel="noopener noreferrer">
-          Ouvrir le lien
-        </a>
-      </p>
-      <button type="button" onClick={onRemove}>
+      <button
+        type="button"
+        onClick={onRemove}
+        style={{ color: "red", width: "100px", margin: "auto" }}
+      >
         Supprimer
       </button>
     </div>
   );
-}
+};
 
 export default BookmarkItem;

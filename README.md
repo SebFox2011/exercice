@@ -46,3 +46,4 @@ Sur le navigateur, aller sur cette url: <http://localhost:5173/>
 - Meilleure gestion du loading et disabled du bouton pendant le chargement => react-query.
 - Amélioration du design => utilisation de tailwind CSS ou material-Ui.
 - Mémorisation des urls en cache ou en base.
+- Amélioration du rendu des images de prévisualisation

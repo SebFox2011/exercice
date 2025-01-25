@@ -6,6 +6,12 @@ type Props = {
   onAddBookmark: (bookmark: Bookmark) => void;
 };
 
+/**
+ * Composant permettant d'ajouter un favori
+ * @param onAddBookmark Fonction appelée lors de l'ajout d'un favori
+ * @returns JSX.Element
+ * @see Bookmark
+ */
 const BookmarkForm = ({ onAddBookmark }: Props) => {
   const [url, setUrl] = useState("");
 
@@ -29,14 +35,14 @@ const BookmarkForm = ({ onAddBookmark }: Props) => {
         addedDate: dateFormat(new Date()),
         publishedDate: data.upload_date
           ? dateFormat(new Date(data.upload_date))
-          : "Pas de date de publication disponible.",
+          : undefined,
         duration: data.duration
           ? new Date(data.duration * 1000).toISOString().substring(11, 19)
-          : "Pas de durée disponible.",
+          : undefined,
         dimensions:
           data.width && data.height
             ? `${data.width}x${data.height} pixels`
-            : "Pas de dimensions disponibles.",
+            : undefined,
         thumbnailUrl: data.thumbnail_url,
       };
 

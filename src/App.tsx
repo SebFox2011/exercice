@@ -2,8 +2,14 @@ import { useState } from "react";
 import BookmarkForm from "./composants/BookmarkForm";
 import BookmarkList from "./composants/BookmarkList";
 import type Bookmark from "./types";
-import "./App.css";
 
+/**
+ * Composant principal de l'application
+ * @returns JSX.Element
+ * @see Bookmark
+ * @see BookmarkForm
+ * @see BookmarkList
+ */
 const App = () => {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 

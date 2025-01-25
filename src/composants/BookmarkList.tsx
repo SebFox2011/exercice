@@ -6,11 +6,19 @@ type Props = {
   onRemoveBookmark: (id: string) => void;
 };
 
-function BookmarkList({ bookmarks, onRemoveBookmark }: Props) {
+/**
+ * Composant affichant la liste des favoris
+ * @param bookmarks Liste des favoris
+ * @param onRemoveBookmark Fonction appelée lors de la suppression d'un favori
+ * @returns JSX.Element
+ * @see BookmarkItem
+ * @example
+ */
+const BookmarkList = ({ bookmarks, onRemoveBookmark }: Props) => {
   return (
     <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
       {bookmarks?.length ? (
-        bookmarks.map(bookmark => (
+        bookmarks.map((bookmark) => (
           <BookmarkItem
             key={bookmark.id}
             bookmark={bookmark}
@@ -22,6 +30,6 @@ function BookmarkList({ bookmarks, onRemoveBookmark }: Props) {
       )}
     </div>
   );
-}
+};
 
 export default BookmarkList;
