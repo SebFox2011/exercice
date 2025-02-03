@@ -1,9 +1,9 @@
 import { useState } from "react";
-import type Bookmark from "../types";
+import type { Bookmark, PhotoBookmark, VideoBookmark } from "../types";
 import { isValidURL, dateFormat } from "../utils";
 
 type Props = {
-  onAddBookmark: (bookmark: Bookmark) => void;
+  onAddBookmark: (bookmark: PhotoBookmark | VideoBookmark) => void;
 };
 
 /**
@@ -27,7 +27,9 @@ const BookmarkForm = ({ onAddBookmark }: Props) => {
       const data = await response.json();
       if (data.error) throw new Error(data.error);
 
-      const bookmark: Bookmark = {
+      let bookmark: PhotoBookmark | VideoBookmark;
+
+      const bookmarkBase: Bookmark = {
         id: Date.now().toString(),
         url,
         title: data.title,
@@ -36,15 +38,25 @@ const BookmarkForm = ({ onAddBookmark }: Props) => {
         publishedDate: data.upload_date
           ? dateFormat(new Date(data.upload_date))
           : undefined,
-        duration: data.duration
-          ? new Date(data.duration * 1000).toISOString().substring(11, 19)
-          : undefined,
-        dimensions:
-          data.width && data.height
-            ? `${data.width}x${data.height} pixels`
-            : undefined,
-        thumbnailUrl: data.thumbnail_url,
       };
+
+      if (data.duration) {
+        bookmark = {
+          ...bookmarkBase,
+          duration: data.duration
+            ? new Date(data.duration * 1000).toISOString().substring(11, 19)
+            : undefined,
+          thumbnailUrl: data.thumbnail_url,
+          type: "video",
+        };
+      } else {
+        bookmark = {
+          ...bookmarkBase,
+          dimensions: `${data.width}x${data.height} pixels`,
+          thumbnailUrl: data.thumbnail_url,
+          type: "photo",
+        };
+      }
 
       onAddBookmark(bookmark);
       setUrl("");

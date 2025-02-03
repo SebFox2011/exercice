@@ -18,9 +18,17 @@ interface Bookmark {
   author: string;
   addedDate: string;
   publishedDate?: string;
+}
+interface VideoBookmark extends Bookmark {
+  type: "video";
   duration?: string;
-  dimensions?: string;
   thumbnailUrl?: string;
 }
 
-export default Bookmark;
+interface PhotoBookmark extends Bookmark {
+  type: "photo";
+  dimensions: string;
+  thumbnailUrl: string;
+}
+
+export type {Bookmark, VideoBookmark, PhotoBookmark };

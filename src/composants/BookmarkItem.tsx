@@ -1,16 +1,16 @@
-import type Bookmark from "../types";
+import type { PhotoBookmark, VideoBookmark } from "../types";
 
 type Props = {
-  bookmark: Bookmark;
+  bookmark: PhotoBookmark | VideoBookmark;
   onRemove: () => void;
 };
 
 /**
-  * Composant affichant un favori
-  * @param bookmark Favori à afficher
-  * @param onRemove Fonction appelée lors de la suppression du favori
-  * @returns JSX.Element
-  */
+ * Composant affichant un favori
+ * @param bookmark Favori à afficher
+ * @param onRemove Fonction appelée lors de la suppression du favori
+ * @returns JSX.Element
+ */
 const BookmarkItem = ({ bookmark, onRemove }: Props) => {
   return (
     <div
@@ -24,13 +24,12 @@ const BookmarkItem = ({ bookmark, onRemove }: Props) => {
         borderRadius: "15px",
       }}
     >
-      {bookmark.thumbnailUrl && (
         <img
           src={bookmark.thumbnailUrl}
           alt={bookmark.title}
           style={{ maxWidth: "200px" }}
         />
-      )}
+
       <p>
         <a href={bookmark.url} target="_blank" rel="noreferrer">
           {bookmark.url}
@@ -39,11 +38,14 @@ const BookmarkItem = ({ bookmark, onRemove }: Props) => {
       <p>Titre: {bookmark.title}</p>
       <p>Auteur: {bookmark.author}</p>
       <p>Date d'ajout: {bookmark.addedDate}</p>
-      {bookmark.publishedDate && (
-        <p>Date de publication: {bookmark.publishedDate}</p>
+      {bookmark.type === "photo" && (
+        <>
+          <p>Date de publication: {bookmark.publishedDate}</p>
+          <p>Dimensions: {bookmark.dimensions}</p>
+        </>
       )}
-      {bookmark.duration && <p>Durée: {bookmark.duration}</p>}
-      {bookmark.dimensions && <p>Dimensions: {bookmark.dimensions}</p>}
+      {bookmark.type === "video" && <p>Durée: {bookmark.duration}</p>}
+
       <button
         type="button"
         onClick={onRemove}

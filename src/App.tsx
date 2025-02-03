@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BookmarkForm from "./composants/BookmarkForm";
 import BookmarkList from "./composants/BookmarkList";
-import type Bookmark from "./types";
+import type { VideoBookmark, PhotoBookmark } from "./types";
 
 /**
  * Composant principal de l'application
@@ -11,13 +11,15 @@ import type Bookmark from "./types";
  * @see BookmarkList
  */
 const App = () => {
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+  const [bookmarks, setBookmarks] = useState<(PhotoBookmark | VideoBookmark)[]>(
+    []
+  );
 
-  const addBookmark = (bookmark: Bookmark) =>
+  const addBookmark = (bookmark: PhotoBookmark | VideoBookmark) =>
     setBookmarks([...bookmarks, bookmark]);
 
   const removeBookmark = (id: string) =>
-    setBookmarks(bookmarks.filter((item) => item.id !== id));
+    setBookmarks((prevState) => prevState.filter((item) => item.id !== id));
 
   return (
     <div

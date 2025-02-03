@@ -1,8 +1,8 @@
-import type Bookmark from "../types";
+import type { PhotoBookmark, VideoBookmark } from "../types";
 import BookmarkItem from "./BookmarkItem";
 
 type Props = {
-  bookmarks: Bookmark[];
+  bookmarks: (PhotoBookmark | VideoBookmark)[];
   onRemoveBookmark: (id: string) => void;
 };
 
@@ -17,7 +17,7 @@ type Props = {
 const BookmarkList = ({ bookmarks, onRemoveBookmark }: Props) => {
   return (
     <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-      {bookmarks?.length ? (
+      {bookmarks.length ? (
         bookmarks.map((bookmark) => (
           <BookmarkItem
             key={bookmark.id}
